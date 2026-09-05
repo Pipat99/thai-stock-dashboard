@@ -294,13 +294,11 @@ def robots_txt():
 
 @app.get("/")
 def root():
-    """
-    Serve หน้าเว็บ Frontend (index.html)
-    """
-    html_path = os.path.join(os.path.dirname(__file__), "index.html")
-    if not os.path.exists(html_path):
-        html_path = "index.html"
-    return FileResponse(html_path, media_type="text/html")
+    return FileResponse("index.html")
+
+@app.get("/index.html")
+def get_index():
+    return FileResponse("index.html")
 
 
 @app.get("/health")
