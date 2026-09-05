@@ -295,20 +295,23 @@ def robots_txt():
 @app.get("/")
 def root():
     """
-    Health Check Endpoint สำหรับตรวจสอบสถานะของ API และคืนค่าข้อความต้อนรับ
+    Serve หน้าเว็บ Frontend (index.html)
+    """
+    html_path = os.path.join(os.path.dirname(__file__), "index.html")
+    if not os.path.exists(html_path):
+        html_path = "index.html"
+    return FileResponse(html_path, media_type="text/html")
+
+
+@app.get("/health")
+def health_check():
+    """
+    Health Check Endpoint สำหรับตรวจสอบสถานะของ API
     """
     return {
         "status": "online",
-        "message": "ยินดีต้อนรับสู่ระบบวิเคราะห์หุ้นไทยสำหรับมือใหม่ (Thai Stock Analysis API - Phase 4 AI Assistant)",
+        "message": "Thai Stock Analysis API is running",
         "docs_url": "/docs",
-        "endpoints": {
-            "health_check": "GET /",
-            "market_summary": "GET /market-summary",
-            "sector_rotation": "GET /sector-rotation",
-            "seasonality": "GET /seasonality/{symbol}",
-            "analyze_stock": "GET /analyze/{symbol}",
-            "ai_consult": "POST /ai-consult",
-        },
     }
 
 
